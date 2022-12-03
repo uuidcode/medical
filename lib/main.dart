@@ -4,11 +4,14 @@ import 'dart:developer';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:medical/Info.dart';
 import 'package:medical/person.dart';
 
+import 'medicalCost.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,11 +20,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Medical Report',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Medical Report'),
     );
   }
 }
@@ -35,8 +38,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _controller = TextEditingController();
   String? _selectedValue;
-  TextEditingController _controller = TextEditingController();
   Info? _info;
 
   @override
@@ -54,23 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('AlertDialog'),
-          content: Text(_controller.text + _selectedValue!),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                setState(() {
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('Yes'),
-            ),
-          ],
-        ),
-      );
+        MedicalCost medicalCost = MedicalCost.of();
+        medicalCost.init(_info!);
+        medicalCost.drawPage1();
+        medicalCost.drawPage2();
+        medicalCost.drawPersonAgreement();
+        medicalCost.drawOwnerAgreement();
     });
   }
 
@@ -80,18 +72,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Container(
+        margin: new EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             DropdownButton<String>(
-              menuMaxHeight: 500.0,
+              iconSize: 30,
               isExpanded: true,
               value: _selectedValue,
               style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 25,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold),
               onChanged: (String? newValue) {
                 setState(() {

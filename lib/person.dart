@@ -7,18 +7,20 @@ class Person {
   String? phone1;
   String? phone2;
   String? phone3;
-  bool? owner;
+  bool? owner = false;
   Bank? bank;
 
-  Person(
-      {this.name,
+  Person({
+        this.name,
         this.number1,
         this.number2,
         this.phone1,
         this.phone2,
         this.phone3,
         this.owner,
-        this.bank});
+        this.bank
+      }
+  );
 
   Person.fromJson(Map<String, dynamic> json) {
     name = json['name'];

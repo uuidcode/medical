@@ -60,11 +60,18 @@ class MedicalCost {
         return this;
     }
 
+    Future<ByteData> loadAssetFont() async {
+        ByteData imageData = await rootBundle.load('assets/NanumMyeongjo-Regular.ttf.zip');
+        return imageData;
+    }
+
     void draw(int page, void Function() runnable) async {
+        ByteData fBitMapFontData = await loadAssetFont();
+        bitmapFont = img.BitmapFont.fromZip(fBitMapFontData.buffer.asUint8List());
+
         String fileName = '$page.png';
         final byteData = await rootBundle.load('assets/$fileName');
         image = img.decodeImage(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-        bitmapFont = img.readFont('Batang', image!);
 
         runnable();
 

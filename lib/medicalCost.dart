@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:medical/person.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'Info.dart';
 import 'bank.dart';
@@ -26,15 +24,6 @@ class MedicalCost {
     static MedicalCost of() {
         return MedicalCost();
     }
-
-    // public static void main(String[] args) throws Exception {
-    //     MedicalCost.of()
-    //         .init()
-    //         .drawPage1()
-    //         .drawPage2()
-    //         .drawPersonAgreement()
-    //         .drawOwnerAgreement();
-    // }
 
     MedicalCost init(Info currentInfo) {
         info = currentInfo;
@@ -61,7 +50,7 @@ class MedicalCost {
     }
 
     Future<ByteData> loadAssetFont() async {
-        ByteData imageData = await rootBundle.load('assets/NanumMyeongjo-Regular.ttf.zip');
+        ByteData imageData = await rootBundle.load('assets/batang.zip');
         return imageData;
     }
 
@@ -130,8 +119,8 @@ class MedicalCost {
     }
 
     void drawDisease() {
-        img.drawString(image!, bitmapFont!, 120, 420, info!.name!);
-        img.drawString(image!, bitmapFont!, 350, 430, info!.name!);
+        img.drawString(image!, img.arial_14, 120, 420, '\ud55c\uae00');
+        img.drawString(image!, bitmapFont!, 350, 430, 'test');
     }
 
     void drawCheck(int left, int top) {

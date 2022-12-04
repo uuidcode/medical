@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(8.0),
-              child:  DropdownButtonFormField<String>(
+              child: DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                     labelText: '신청자 선택'
                 ),
@@ -109,20 +109,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
                 items:
-                _info?.personList?.map<String>((Person p) {
-                  return p.name!;
-                })
+                  _info?.personList?.map<String>((Person p) {
+                      return p.name!;
+                    })
                     .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                     );
                 }).toList(),
               ) ,
             ),
           Container(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
+            child: TextFormField(
               decoration: const InputDecoration(
                   labelText: "병명",
                   hintText: "감기"

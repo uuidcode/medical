@@ -74,7 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             DropdownButton<String>(
-              iconSize: 30,
+              itemHeight: 80,
+              iconSize: 40,
               isExpanded: true,
               value: _selectedValue,
               style: const TextStyle(

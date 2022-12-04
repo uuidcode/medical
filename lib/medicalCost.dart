@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_save/image_save.dart';
 import 'package:medical/person.dart';
+
 
 import 'Info.dart';
 import 'bank.dart';
@@ -19,6 +21,11 @@ class MedicalCost {
     String? year;
     String? month;
     String? day;
+    String? hour;
+    String? minute;
+    String? second;
+    String? millisecond;
+
     img.BitmapFont? bitmapFont;
 
     static MedicalCost of(Info info) {
@@ -28,10 +35,23 @@ class MedicalCost {
     }
 
     void create() {
+        drawPage0();
         drawPage1();
         drawPage2();
         drawPersonAgreement();
         drawOwnerAgreement();
+    }
+
+    static Future<void> openPhoto() async {
+      await LaunchApp.openApp(
+          iosUrlScheme: 'photos-redirect://',
+      );
+    }
+
+    static Future<void> openKB() async {
+        await LaunchApp.openApp(
+            iosUrlScheme: 'kakao6b20c0225e65103854b2b80f99ccf7cb://',
+        );
     }
 
     MedicalCost init(Info currentInfo) {
@@ -47,9 +67,15 @@ class MedicalCost {
         year =  DateTime.now().year.toString();
         month = DateTime.now().month.toString();
         day = DateTime.now().day.toString();
+        hour = DateTime.now().hour.toString();
+        minute = DateTime.now().minute.toString();
+        second = DateTime.now().second.toString();
 
         month = prependZero(month!);
         day = prependZero(day!);
+        hour = prependZero(hour!);
+        minute = prependZero(minute!);
+        second = prependZero(second!);
 
         print(year);
         print(month);
@@ -74,9 +100,20 @@ class MedicalCost {
         runnable();
 
         var encodeImage = img.encodePng(image!) as Uint8List;
-        ImageGallerySaver.saveImage(encodeImage.buffer.asUint8List(), quality: 100);
+
+        await ImageSave.saveImage(encodeImage.buffer.asUint8List(), '$year-$month-$day-$hour-$minute-$second-$page.png', albumName: "의료비");
     }
-    
+
+    void drawPage0() {
+        draw(0, () {
+            int left = 10;
+            int top = 20;
+            img.drawString(image!, bitmapFont!, left, top, person!.name!);
+            img.drawString(image!, bitmapFont!, left, top + 30, info!.name!);
+            img.drawString(image!, bitmapFont!, left, top + 60, '$year-$month-$day $hour:$minute:$second');
+        });
+    }
+
     void drawPage1() {
         draw(1, () {
             drawPerson(person!, 150, 95);

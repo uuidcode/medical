@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  external_app_launcher:
+    dependency: "direct main"
+    description:
+      name: external_app_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -109,13 +116,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.2"
-  image_gallery_saver:
+  image_save:
     dependency: "direct main"
     description:
-      name: image_gallery_saver
+      name: image_save
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.1"
+    version: "5.0.0"
   js:
     dependency: transitive
     description:

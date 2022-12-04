@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:external_app_launcher/external_app_launcher.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_save/image_save.dart';
@@ -40,18 +38,6 @@ class MedicalCost {
         drawPage2();
         drawPersonAgreement();
         drawOwnerAgreement();
-    }
-
-    static Future<void> openPhoto() async {
-      await LaunchApp.openApp(
-          iosUrlScheme: 'photos-redirect://',
-      );
-    }
-
-    static Future<void> openKB() async {
-        await LaunchApp.openApp(
-            iosUrlScheme: 'kakao6b20c0225e65103854b2b80f99ccf7cb://',
-        );
     }
 
     MedicalCost init(Info currentInfo) {
@@ -107,10 +93,11 @@ class MedicalCost {
     void drawPage0() {
         draw(0, () {
             int left = 10;
-            int top = 20;
+            int top = 10;
             img.drawString(image!, bitmapFont!, left, top, person!.name!);
-            img.drawString(image!, bitmapFont!, left, top + 30, info!.name!);
-            img.drawString(image!, bitmapFont!, left, top + 60, '$year-$month-$day $hour:$minute:$second');
+            img.drawString(image!, bitmapFont!, left, top + 20, info!.name!);
+            img.drawString(image!, bitmapFont!, left, top + 40, '$year-$month-$day');
+            img.drawString(image!, bitmapFont!, left, top + 60, '$hour:$minute:$second');
         });
     }
 

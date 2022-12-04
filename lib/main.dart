@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
@@ -60,20 +60,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
         MedicalCost medicalCost = MedicalCost.of(_info!);
         medicalCost.create();
-        // MedicalCost.openPhoto();
     });
   }
 
-  void _openPhoto() {
-    setState(() {
-      MedicalCost.openPhoto();
-    });
+  Future<void> open(String scheme) async {
+    await LaunchApp.openApp(
+      iosUrlScheme: '$scheme://',
+    );
   }
 
-  void _openKB() {
-    setState(() {
-      MedicalCost.openKB();
-    });
+  void openPhoto() {
+    open('photos-redirect');
+  }
+
+  void openKB() {
+    open('kakao6b20c0225e65103854b2b80f99ccf7cb');
   }
 
   @override
@@ -90,7 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
+              child:  DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                    labelText: '신청자 선택'
+                ),
                 itemHeight: 80,
                 iconSize: 40,
                 isExpanded: true,
@@ -142,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: _openPhoto,
+                onPressed: openPhoto,
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 30),
                     minimumSize: const Size(200, 60)),
@@ -151,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ), Container(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: _openKB,
+                onPressed: openKB,
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 30),
                     minimumSize: const Size(200, 60)),

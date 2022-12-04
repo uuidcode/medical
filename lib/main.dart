@@ -70,11 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void openPhoto() {
-    open('photos-redirect');
+    setState(() {
+      open('photos-redirect');
+    });
   }
 
   void openKB() {
-    open('kakao6b20c0225e65103854b2b80f99ccf7cb');
+    setState(() {
+      open('kakao6b20c0225e65103854b2b80f99ccf7cb');
+    });
   }
 
   @override
@@ -93,7 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
-                    labelText: '신청자 선택'
+                    labelText: '신청자 선택',
+                    labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
                 itemHeight: 80,
                 iconSize: 40,
@@ -122,10 +130,18 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           Container(
             padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
+            child: TextField(
               decoration: const InputDecoration(
-                  labelText: "병명",
-                  hintText: "감기"
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                labelText: "진단명",
+                floatingLabelStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+                labelStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
               ),
               controller: _controller,
               style: const TextStyle(

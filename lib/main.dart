@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:developer';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:medical/Info.dart';
 import 'package:medical/person.dart';
 
@@ -20,11 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Medical Report',
+      title: 'Medical Cost',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Medical Report'),
+      home: const MyHomePage(title: 'Medical Cost'),
     );
   }
 }
@@ -57,12 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-        MedicalCost medicalCost = MedicalCost.of();
-        medicalCost.init(_info!);
-        medicalCost.drawPage1();
-        medicalCost.drawPage2();
-        medicalCost.drawPersonAgreement();
-        medicalCost.drawOwnerAgreement();
+        _info!.name = _controller.text;
+        _info!.personName = _selectedValue;
+        MedicalCost.of(_info!).create();
     });
   }
 
@@ -73,10 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Container(
-        margin: new EdgeInsets.symmetric(horizontal: 20.0),
+        margin: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             DropdownButton<String>(
               iconSize: 30,
@@ -104,15 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextField(
               controller: _controller,
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold)
+            ),
+            ElevatedButton(
+              onPressed: _incrementCounter,
+              style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 30),
+                    minimumSize: const Size(200, 60)),
+              child: const Text("만들기"),
             )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

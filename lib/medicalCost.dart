@@ -21,8 +21,17 @@ class MedicalCost {
     String? day;
     img.BitmapFont? bitmapFont;
 
-    static MedicalCost of() {
-        return MedicalCost();
+    static MedicalCost of(Info info) {
+        MedicalCost medicalCost = MedicalCost();
+        medicalCost.init(info);
+        return medicalCost;
+    }
+
+    void create() {
+        drawPage1();
+        drawPage2();
+        drawPersonAgreement();
+        drawOwnerAgreement();
     }
 
     MedicalCost init(Info currentInfo) {
@@ -65,30 +74,42 @@ class MedicalCost {
         runnable();
 
         var encodeImage = img.encodePng(image!) as Uint8List;
-        ImageGallerySaver.saveImage(encodeImage.buffer.asUint8List());
+        ImageGallerySaver.saveImage(encodeImage.buffer.asUint8List(), quality: 100);
     }
     
     void drawPage1() {
         draw(1, () {
-            drawPerson(person!, 150, 107);
-            drawPerson(owner!, 150, 181);
+            drawPerson(person!, 150, 95);
+            drawPerson(owner!, 150, 169);
             
-            drawCheck(108, 205);
-            drawCheck(165, 357);
-            drawCheck(495, 645);
+            drawCheckCost();
+            drawCheckDisease();
+            drawCheckAgreement();
             
-            drawBank();
-            drawDisease();
-            drawDate(person!);
+            drawBank(574);
+            drawDisease(410);
+            drawDate(person!, 725);
         });
+    }
+
+    void drawCheckAgreement() {
+      drawCheck(491, 633);
+    }
+
+    void drawCheckDisease() {
+      drawCheck(162, 346);
+    }
+
+    void drawCheckCost() {
+      drawCheck(105, 194);
     }
 
     void drawPage2() {
         draw(2, () {
-            int left = 476;
-            drawCheck(left, 319);
-            drawCheck(left, 386);
-            drawCheck(left, 475);
+            int left = 473;
+            drawCheck(left, 307);
+            drawCheck(left, 374);
+            drawCheck(left, 463);
         });
     }
 
@@ -106,25 +127,25 @@ class MedicalCost {
 
     void drawAgreement(int page, Person person) {
         return draw(page, () {
-            int left = 476;
-            drawCheck(left, 115);
-            drawCheck(left, 183);
-            drawCheck(left, 271);
-            drawCheck(left, 347);
-            drawCheck(left, 538);
-            drawCheck(left, 578);
-            drawCheck(left, 679);
-            drawAgreementPerson(person);
+            int left = 473;
+            drawCheck(left, 103);
+            drawCheck(left, 171);
+            drawCheck(left, 259);
+            drawCheck(left, 335);
+            drawCheck(left, 526);
+            drawCheck(left, 566);
+            drawCheck(left, 667);
+            drawAgreementPerson(person, 722);
         });
     }
 
-    void drawDisease() {
-        img.drawString(image!, img.arial_14, 120, 420, '\ud55c\uae00');
-        img.drawString(image!, bitmapFont!, 350, 430, 'test');
+    void drawDisease(int top) {
+        img.drawString(image!, bitmapFont!, 120, top, info!.name!);
+        img.drawString(image!, bitmapFont!, 350, top + 10, info!.name!);
     }
 
     void drawCheck(int left, int top) {
-        img.drawString(image!, bitmapFont!, left, top, 'V');
+        img.drawString(image!, bitmapFont!, left, top, '∨');
     }
 
     String prependZero(String value) {
@@ -135,9 +156,7 @@ class MedicalCost {
         return "0$value";
     }
 
-    void drawDate(Person person) {
-        int top = 736;
-
+    void drawDate(Person person, top) {
         drawNumber(year!, 105, top);
         drawNumber(month!, 190, top);
         drawNumber(day!, 235, top);
@@ -146,9 +165,8 @@ class MedicalCost {
         img.drawString(image!, bitmapFont!, 460, top, person.name!);
     }
 
-    void drawAgreementPerson(Person person) {
-        int top = 734;
-        int nameTop = 710;
+    void drawAgreementPerson(Person person, top) {
+        int nameTop = 700;
 
         drawNumber(year!, 155, top);
         drawNumber(month!, 245, top);
@@ -158,11 +176,10 @@ class MedicalCost {
         img.drawString(image!, bitmapFont!, 500, nameTop, person.name!);
     }
 
-    void drawBank() {
-        int top = 585;
+    void drawBank(top) {
         Bank? bank = owner!.bank;
 
-        img.drawString(image!, bitmapFont!, 145, top, bank!.name!);
+        img.drawString(image!, bitmapFont!, 139, top, bank!.name!);
         img.drawString(image!, bitmapFont!, 250, top, bank.number!);
         img.drawString(image!, bitmapFont!, 480, top, owner!.name!);
     }
@@ -182,8 +199,8 @@ class MedicalCost {
         drawNumber(person.number2!, left + 248, top);
 
         if (person.owner?? false) {
-            int phoneLeft = 140;
-            int phoneTop = 230;
+            int phoneLeft = 141;
+            int phoneTop = top + 49;
 
             drawNumber(person.phone1!, phoneLeft, phoneTop);
             drawNumber(person.phone2!, phoneLeft + 67, phoneTop);

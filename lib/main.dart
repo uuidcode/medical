@@ -99,6 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
             }).toList(),
             ),
             TextField(
+              decoration: const InputDecoration(
+                  labelText: "병명",
+                  hintText: "감기"
+              ),
               controller: _controller,
               style: const TextStyle(
                 fontSize: 30,
@@ -107,8 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: _incrementCounter,
               style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 30),
-                    minimumSize: const Size(200, 60)),
+                  textStyle: const TextStyle(fontSize: 30),
+                  minimumSize: const Size(200, 60)),
               child: const Text("만들기"),
             )
           ],
